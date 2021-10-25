@@ -8,7 +8,7 @@
 
 ## Literature
 
-### Introduction
+### I. Introduction
 
 As a new topic in the course of computaional physics this semester, quantum computer provides novel and fantastic ways for us to study and solve problems that we used to solve in classical way and surely shows the possibility that we could use it to solve complicate problems more effectively. One simple example we have seen is the half adder circuit that can calculate 1+1=2 by **IBM Qiskit**, but could **we extend our vision to more complex problem that also related to the physics**? The answer is definitely yes. The amazing platform that we will use in this midterm project is the **Qiskit Nature**, which is designed to bridge the gap between natural sciences and quantum simulations. For this midterm project, **we will only focus on the simple part of solution-driven ones by applying them to study the physical problem of energy level and trying to understand and rewrite the codes from given examples.**
 
@@ -18,11 +18,11 @@ Let me briefly talk about the **physical context of this midterm project:** As w
 
 However, for examples form the **Qiskit Nature documentation** [[4]](https://qiskit.org/documentation/nature/index.html) that we will study, they prefered the definition of **electronic structure** in quantum chemistry, which is refered as **the state of motion of electrons in an electrostatic field created by stationary nuclei** [[5]](https://en.wikipedia.org/wiki/Electronic_structure). Except for a small number of simple problems such as hydrogen-like atoms, the solution of electronic structure problems require modern computers and such problems are routinely solved with quantum chemistry computer programs. In fact, electronic structure calculations rank among the most computationally intensive tasks in all scientific calculations, thus for this reason, quantum chemistry calculations take up significant shares on many scientific supercomputer facilities.
 
-### Reasons to use Qiskit Nature
+### II. Reasons to use Qiskit Nature
 
 In the new release of Qiskit Nature[[6]](https://research.ibm.com/blog/qiskit-application-modules), the added problem-based structure enables a straightforward extension of Qiskit Nature toward other problem classes in condensed matter, lattice field theories, and biology. As part of this release, Qiskit Nature would also allow us to use the ubiquitous second quantization formalism to solve a variety of problems, ranging from fundamental particle physics to solid state physics and statistical mechanics. At the same time, we can re-frame our problems by using operators that fulfill fermionic, bosonic or spin statistics.Combinations of degrees of freedom subject to different commutation rules are also supported, thus **in short these functionalities will enable the implementation of arbitrary Hamiltonians, making Qiskit Nature a nice toolbox to solve physical problems in quantum approach**. However, to compute and slove problems that are used to be dealed with in classical way from a quantum computer, one would still need some assiantce from classcial computer. In other word, **there is no such method to build a "complete quantum computer" which has no similarity with a classical one at least for Qiskit Nature**. Qiskit Nature is not only powerful to make it easy and convenient for us to define our problem in the way of quantum computer, but **can also helps map it onto the quantum computer once we have defined our problem**. Second quantized operators are mapped onto qubit operators that can be directly used in quantum computations, without losing the information related to the nature of the problem.
 
-### Comparision with other method
+### III. Comparision with other method
 
 In this part, I would also like to **introduce briefly another method to solve electronic structure problems so that we can compare that with our quantum method**, Qiskit Nature, to see the advantages and disadvantages that quantum computer brings with. The comparing method I chose is by using machine learning to solve electronic structure problems from a paper in recent year[[7]](https://www.nature.com/articles/s41524-019-0162-7).
 
@@ -38,7 +38,7 @@ In summary, the **advantage** for this method **is that the proposed paradigm al
 
 ## Implementation
 
-### The Hartree-Fock initial state
+### I. The Hartree-Fock initial state
 
 The platform we use in this project, Qiskit Nature, is interfaced with different classical codes, which are able to find the HF solutions. Interfacing between Qiskit Nature and the following codes is already available: "Gaussian", "Psi4", "PyQuante" and "PySCF". In the following I will set up a PySCF driver for the hydrogen molecule at equilibrium bond length (0.735 angstrom) in the singlet state and with no charge.
 
@@ -55,7 +55,7 @@ molecule = Molecule(geometry=[['H', [0., 0., 0.]],
 driver = ElectronicStructureMoleculeDriver(molecule, basis='sto3g', driver_type=ElectronicStructureDriverType.PYSCF)
 ```
 
-### The mapping from fermions to qubits
+### II. The mapping from fermions to qubits
 
 The Hamiltonian we have for HF method is expressed in terms of fermionic operators, and here we will map these operators to spin operators so that we can encode the problem into the state of a quantum computer. Here we set up the Electronic Structure Problem to generate the Second quantized operator and a qubit converter that will map it to a qubit operator.
 
@@ -86,7 +86,7 @@ print(qubit_op)
 
 Now that the Hamiltonian is ready, it can be used in a quantum algorithm to find information about the electronic structure of the corresponding molecule. 
 
-### The ground state solver
+### III. The ground state solver
 
 Since we alreday defined the molecular system, we then need to define a solver, which is the algorithm through which the ground state is computed. Let’s first start with a purely classical example: the NumPy minimum eigensolver. This algorithm exactly diagonalizes the Hamiltonian. Although it scales badly, it can be used on small systems to check the results of the quantum algorithms.
 
@@ -122,6 +122,33 @@ another_solver = VQE(ansatz=tl_circuit,
 ```
 
 ## Results
+
+We are now ready to run the calculation as following:
+
+```python
+from qiskit_nature.algorithms import GroundStateEigensolver
+calc = GroundStateEigensolver(qubit_converter, vqe_solver)
+res = calc.solve(es_problem)
+print(res)
+```
+
+The result is showed as following:
+
+<img src="vqe result.png" alt="vqe result" height="50%" width="50%"/>
+
+We can compare the VQE results to the NumPy exact solver:
+
+```python
+calc = GroundStateEigensolver(qubit_converter, numpy_solver)
+res = calc.solve(es_problem)
+print(res)
+```
+
+The result is showed as following:
+
+<img src="numpy result.png" alt="numpy result" height="50%" width="50%"/>
+
+Obviously we can see **the results are really close so the Variational Quantum Eigensolver algorithm gives the correct answer as we expected**.
 
 ## Outlook
 

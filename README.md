@@ -2,7 +2,7 @@
 ## Description
 + This is a midterm project for computational physics 1. In this project, I will **use Qiskit nature to study electronic structure and calculate ground state**.
 
-+ There are three main parts in the project: **Literature**, **implementation** and **presentation**. The jupyter notebooks for literature and implementation part can be found in the corresponding folder. The presentation part includes this README file and a **[YouTube-style video]()**.
++ There are three main parts in the project: **Literature**, **implementation** and **presentation**. The jupyter notebooks for literature and implementation part can be found in the corresponding folder. The presentation part includes this README file and a **[YouTube-style video](https://www.youtube.com/watch?v=HGOVSyNvR1c)**.
 
 + Note that **this project is mainly based on tutorials from [Qiskit Nature Documentation](https://qiskit.org/documentation/nature/index.html)**. The References can be found at the corresponding jupyter notebook and the license can be found in the main folder.
 

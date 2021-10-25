@@ -40,7 +40,7 @@ In summary, the **advantage** for this method **is that the proposed paradigm al
 
 ### I. The Hartree-Fock initial state
 
-The platform we use in this project, Qiskit Nature, is interfaced with different classical codes, which are able to find the HF solutions. Interfacing between Qiskit Nature and the following codes is already available: "Gaussian", "Psi4", "PyQuante" and "PySCF". In the following I will set up a PySCF driver for the hydrogen molecule at equilibrium bond length (0.735 angstrom) in the singlet state and with no charge.
+The platform we use in this project, Qiskit Nature, is interfaced with different classical codes, which are able to find the HF solutions. Interfacing between Qiskit Nature and the following codes is already available: "Gaussian", "Psi4", "PyQuante" and "PySCF"[[8]](https://qiskit.org/documentation/nature/tutorials/01_electronic_structure.html). In the following I will set up a PySCF driver for the hydrogen molecule at equilibrium bond length (0.735 angstrom) in the singlet state and with no charge.
 
 ```python
 #We have to first install the linting tools in Jupyter notebook
@@ -88,7 +88,7 @@ Now that the Hamiltonian is ready, it can be used in a quantum algorithm to find
 
 ### III. The ground state solver
 
-Since we alreday defined the molecular system, we then need to define a solver, which is the algorithm through which the ground state is computed. Let’s first start with a purely classical example: the NumPy minimum eigensolver. This algorithm exactly diagonalizes the Hamiltonian. Although it scales badly, it can be used on small systems to check the results of the quantum algorithms.
+Since we alreday defined the molecular system, we then need to define a solver, which is the algorithm through which the ground state is computed[[9]](https://qiskit.org/documentation/nature/tutorials/03_ground_state_solvers.html). Let’s first start with a purely classical example: the NumPy minimum eigensolver. This algorithm exactly diagonalizes the Hamiltonian. Although it scales badly, it can be used on small systems to check the results of the quantum algorithms.
 
 ```python
 from qiskit.algorithms import NumPyMinimumEigensolver
@@ -134,7 +134,7 @@ print(res)
 
 The result is showed as following:
 
-<img src="vqe result.png" alt="vqe result" height="50%" width="50%"/>
+<img src="vqe result.png" alt="vqe result" height="80%" width="80%"/>
 
 We can compare the VQE results to the NumPy exact solver:
 
@@ -146,11 +146,13 @@ print(res)
 
 The result is showed as following:
 
-<img src="numpy result.png" alt="numpy result" height="50%" width="50%"/>
+<img src="numpy result.png" alt="numpy result" height="80%" width="80%"/>
 
 Obviously we can see **the results are really close so the Variational Quantum Eigensolver algorithm gives the correct answer as we expected**.
 
 ## Outlook
+
+It would be nice to look at the codes about the drivers and algorithms inside the Qiskit Nature git repository. These codes should be understood at least for some parts so we could change them into similar ones with different parameters to fit in different problems.
 
 ## References
 
@@ -167,6 +169,10 @@ Obviously we can see **the results are really close so the Variational Quantum E
 [[6] https://research.ibm.com/blog/qiskit-application-modules](https://research.ibm.com/blog/qiskit-application-modules);
 
 [[7] https://www.nature.com/articles/s41524-019-0162-7](https://www.nature.com/articles/s41524-019-0162-7);
+
+[[8] https://qiskit.org/documentation/nature/tutorials/01_electronic_structure.html](https://qiskit.org/documentation/nature/tutorials/01_electronic_structure.html);
+
+[[9] https://qiskit.org/documentation/nature/tutorials/03_ground_state_solvers.html](https://qiskit.org/documentation/nature/tutorials/03_ground_state_solvers.html);
 
 ## License
 
